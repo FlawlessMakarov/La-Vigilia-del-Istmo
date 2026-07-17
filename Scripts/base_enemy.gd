@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
-const WalkState = preload("res://Scripts/states/enemy/enemy_walk_state.gd")
-const AttackState = preload("res://Scripts/states/enemy/enemy_attack_state.gd")
-const HurtState = preload("res://Scripts/states/enemy/enemy_hurt_state.gd")
+const WalkState = preload("res://Scripts/states/enemy_walk_state.gd")
+const AttackState = preload("res://Scripts/states/enemy_attack_state.gd")
+const HurtState = preload("res://Scripts/states/enemy_hurt_state.gd")
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_timer: Timer = $AttackTimer
