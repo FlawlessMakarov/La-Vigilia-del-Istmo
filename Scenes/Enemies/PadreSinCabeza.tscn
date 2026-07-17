@@ -1,10 +1,10 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://Scripts/base_enemy.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://Sprites/Imported/Enemies/padre_sin_cabeza/attack/00.png" id="2_attack_00"]
-[ext_resource type="Texture2D" path="res://Sprites/Imported/Enemies/padre_sin_cabeza/hurt/00.png" id="3_hurt_00"]
-[ext_resource type="AudioStream" path="res://Audio/church_bell.mp3" id="3_bell"]
-[ext_resource type="Texture2D" path="res://Sprites/Imported/Enemies/padre_sin_cabeza/walk/00.png" id="4_walk_00"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Imported/Enemies/padre_sin_cabeza/attack/00.png" id="2_attack_00"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Imported/Enemies/padre_sin_cabeza/hurt/00.png" id="3_hurt_00"]
+[ext_resource type="AudioStream" path="res://Assets/Audio/church_bell.mp3" id="3_bell"]
+[ext_resource type="Texture2D" path="res://Assets/Sprites/Imported/Enemies/padre_sin_cabeza/walk/00.png" id="4_walk_00"]
 
 [sub_resource type="AtlasTexture" id="Padre_attack_00"]
 atlas = ExtResource("2_attack_00")

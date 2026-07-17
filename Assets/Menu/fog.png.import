@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dqudkim2giweh"
-path="res://.godot/imported/vecteezy_fog-design-clean-alpha_9374897.png-a3369b52611fb18e2880a1c100339a54.ctex"
+path="res://.godot/imported/fog.png-dfac25bebc6da326cebbca3f43c7817d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://vecteezy_fog-design-clean-alpha_9374897.png"
-dest_files=["res://.godot/imported/vecteezy_fog-design-clean-alpha_9374897.png-a3369b52611fb18e2880a1c100339a54.ctex"]
+source_file="res://Assets/Menu/fog.png"
+dest_files=["res://.godot/imported/fog.png-dfac25bebc6da326cebbca3f43c7817d.ctex"]
 
 [params]
 

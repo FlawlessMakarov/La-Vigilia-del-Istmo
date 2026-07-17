@@ -16,11 +16,26 @@ Juego de defensa por carriles desarrollado con Godot 4.6.
 
 ## Estructura del código
 
-- `game.gd`: controlador de la partida; coordina recursos, colocación y finales.
-- `enemy_spawner.gd`: crea enemigos y controla el ritmo de aparición.
-- `Scripts/core/`: configuración central y reglas del tablero.
-- `Scripts/gameplay/`: catálogos y lógica compartida de juego.
-- `Scripts/ui/`: componentes de interfaz reutilizables.
-- `Scripts/base_defender.gd` y `Scripts/base_enemy.gd`: comportamiento de cada unidad.
+- `Assets/`: audio, sprites, mapa y recursos visuales del menú.
+- `Scenes/`: pantallas y unidades del juego.
+- `Scripts/`: código separado por responsabilidad.
+
+```
+Assets/
+  Audio/       Sonidos y música
+  Maps/        Mapa de batalla
+  Menu/        Fondo, título y niebla del menú
+  Sprites/     Animaciones de defensores y enemigos
+Scenes/
+  Game/        Escena principal de la partida
+  Menu/        Escena del menú
+  Defenders/   Escenas de torres
+  Enemies/     Escenas de monstruos
+Scripts/
+  core/        Configuración y tablero
+  gameplay/    Catálogos de juego
+  states/      Estados de defensores y enemigos
+  ui/          Interfaz de cartas
+```
 
 Para ajustar costos, tiempos, filas o columnas, usa `Scripts/core/game_config.gd`.

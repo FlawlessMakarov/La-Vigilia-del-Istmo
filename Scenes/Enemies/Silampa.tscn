@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bfjog2iht12mc"]
 
 [ext_resource type="Script" uid="uid://dagvk5cmbxbrn" path="res://Scripts/base_enemy.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://d4brtq8f27uou" path="res://Sprites/Imported/Enemies/silampa/attack/00.png" id="2_attack_00"]
-[ext_resource type="Texture2D" uid="uid://nrq0a26wnaqu" path="res://Sprites/Imported/Enemies/silampa/hurt/00.png" id="3_hurt_00"]
-[ext_resource type="Texture2D" uid="uid://bvtb4s20ronb7" path="res://Sprites/Imported/Enemies/silampa/walk/00.png" id="4_walk_00"]
+[ext_resource type="Texture2D" uid="uid://d4brtq8f27uou" path="res://Assets/Sprites/Imported/Enemies/silampa/attack/00.png" id="2_attack_00"]
+[ext_resource type="Texture2D" uid="uid://nrq0a26wnaqu" path="res://Assets/Sprites/Imported/Enemies/silampa/hurt/00.png" id="3_hurt_00"]
+[ext_resource type="Texture2D" uid="uid://bvtb4s20ronb7" path="res://Assets/Sprites/Imported/Enemies/silampa/walk/00.png" id="4_walk_00"]
 
 [sub_resource type="AtlasTexture" id="Silampa_attack_00"]
 atlas = ExtResource("2_attack_00")
