@@ -1,0 +1,115 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/base_enemy.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Sprites/Imported/Enemies/padre_sin_cabeza/attack/00.png" id="2_attack_00"]
+[ext_resource type="Texture2D" path="res://Sprites/Imported/Enemies/padre_sin_cabeza/hurt/00.png" id="3_hurt_00"]
+[ext_resource type="AudioStream" path="res://Audio/church_bell.mp3" id="3_bell"]
+[ext_resource type="Texture2D" path="res://Sprites/Imported/Enemies/padre_sin_cabeza/walk/00.png" id="4_walk_00"]
+
+[sub_resource type="AtlasTexture" id="Padre_attack_00"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(0, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Padre_attack_01"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(724, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Padre_attack_02"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(1448, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Padre_attack_03"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(2172, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Padre_attack_04"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(2896, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Padre_attack_05"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(3620, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Padre_hurt_00"]
+atlas = ExtResource("3_hurt_00")
+region = Rect2(0, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Padre_hurt_01"]
+atlas = ExtResource("3_hurt_00")
+region = Rect2(724, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Padre_hurt_02"]
+atlas = ExtResource("3_hurt_00")
+region = Rect2(1448, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Padre_hurt_03"]
+atlas = ExtResource("3_hurt_00")
+region = Rect2(2172, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Padre_walk_00"]
+atlas = ExtResource("4_walk_00")
+region = Rect2(0, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Padre_walk_01"]
+atlas = ExtResource("4_walk_00")
+region = Rect2(724, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Padre_walk_02"]
+atlas = ExtResource("4_walk_00")
+region = Rect2(1448, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Padre_walk_03"]
+atlas = ExtResource("4_walk_00")
+region = Rect2(2172, 0, 724, 724)
+
+[sub_resource type="SpriteFrames" id="Frames_padre"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": SubResource("Padre_attack_00")}, {"duration": 1.0, "texture": SubResource("Padre_attack_01")}, {"duration": 1.0, "texture": SubResource("Padre_attack_02")}, {"duration": 1.0, "texture": SubResource("Padre_attack_03")}, {"duration": 1.0, "texture": SubResource("Padre_attack_04")}, {"duration": 1.0, "texture": SubResource("Padre_attack_05")}],
+"loop": true,
+"name": &"attack",
+"speed": 8.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("Padre_hurt_00")}, {"duration": 1.0, "texture": SubResource("Padre_hurt_01")}, {"duration": 1.0, "texture": SubResource("Padre_hurt_02")}, {"duration": 1.0, "texture": SubResource("Padre_hurt_03")}],
+"loop": false,
+"name": &"hurt",
+"speed": 7.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("Padre_walk_00")}, {"duration": 1.0, "texture": SubResource("Padre_walk_01")}, {"duration": 1.0, "texture": SubResource("Padre_walk_02")}, {"duration": 1.0, "texture": SubResource("Padre_walk_03")}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="Shape_padre"]
+size = Vector2(66, 82)
+
+[node name="PadreSinCabeza" type="CharacterBody2D"]
+script = ExtResource("1_script")
+enemy_id = "padre"
+display_name = "Padre sin Cabeza"
+speed = 42.0
+max_health = 155.0
+contact_range = 82.0
+attack_damage = 34
+courage_reward = 20
+attack_interval = 1.55
+attack_visual_scale = 1.18
+bell_range = 170.0
+bell_interval = 5.2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.18, 0.18)
+sprite_frames = SubResource("Frames_padre")
+animation = &"walk"
+flip_h = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("Shape_padre")
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+
+[node name="BellSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_bell")
+volume_db = -6.0

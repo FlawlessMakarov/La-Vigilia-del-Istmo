@@ -1,0 +1,284 @@
+[gd_scene format=3 uid="uid://imumnugy6w04"]
+
+[ext_resource type="Script" uid="uid://codycl6ly4fmv" path="res://game.gd" id="1_feb5d"]
+[ext_resource type="Texture2D" path="res://map_pixel_dark_5x6_contiguous.png" id="2_7jktm"]
+[ext_resource type="Script" uid="uid://2mwtm1l52377" path="res://enemy_spawner.gd" id="2_fc0e3"]
+[ext_resource type="Texture2D" uid="uid://xenkm36ysyx3" path="res://Title_.png" id="6_ryrav"]
+[ext_resource type="AudioStream" uid="uid://c8nh2fix066ot" path="res://Audio/Sound.mp3" id="7_eow3j"]
+[ext_resource type="AudioStream" uid="uid://csj8a3rbd7h3" path="res://Audio/goblin_spawn.mp3" id="8_gobsp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape_game_over"]
+size = Vector2(48, 720)
+
+[sub_resource type="Animation" id="Animation_game_over_reset"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Overlay:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterBox:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fade_to_black"]
+resource_name = "fade_to_black"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Overlay:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0.94)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterBox:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.25, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_game_over"]
+_data = {
+&"RESET": SubResource("Animation_game_over_reset"),
+&"fade_to_black": SubResource("Animation_fade_to_black")
+}
+
+[node name="Game" type="Node2D" unique_id=74667693]
+visible = false
+script = ExtResource("1_feb5d")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=686448474]
+position = Vector2(577, 295.5)
+scale = Vector2(0.7583062, 0.7)
+texture = ExtResource("2_7jktm")
+
+[node name="Lanes" type="Node2D" parent="." unique_id=284881793]
+visible = false
+
+[node name="Lane1" type="Line2D" parent="Lanes" unique_id=215588411]
+points = PackedVector2Array(221, 312, 869, 312)
+width = 58.0
+default_color = Color(0.08, 0.16, 0.15, 0.055)
+
+[node name="Lane2" type="Line2D" parent="Lanes" unique_id=1455625076]
+points = PackedVector2Array(221, 358, 869, 358)
+width = 58.0
+default_color = Color(0.10, 0.16, 0.15, 0.05)
+
+[node name="Lane3" type="Line2D" parent="Lanes" unique_id=418727031]
+points = PackedVector2Array(221, 405, 869, 405)
+width = 58.0
+default_color = Color(0.08, 0.16, 0.15, 0.055)
+
+[node name="Lane4" type="Line2D" parent="Lanes"]
+points = PackedVector2Array(221, 455, 869, 455)
+width = 58.0
+default_color = Color(0.10, 0.16, 0.15, 0.05)
+
+[node name="Lane5" type="Line2D" parent="Lanes"]
+points = PackedVector2Array(221, 510, 869, 510)
+width = 58.0
+default_color = Color(0.08, 0.16, 0.15, 0.055)
+
+[node name="GridLine0" type="Line2D" parent="Lanes" unique_id=2011220490]
+points = PackedVector2Array(221, 289, 221, 537.5)
+width = 2.0
+default_color = Color(0.48, 0.72, 0.70, 0.09)
+
+[node name="GridLine1" type="Line2D" parent="Lanes" unique_id=692749651]
+points = PackedVector2Array(329, 289, 329, 537.5)
+width = 2.0
+default_color = Color(0.48, 0.72, 0.70, 0.09)
+
+[node name="GridLine2" type="Line2D" parent="Lanes" unique_id=694961878]
+points = PackedVector2Array(437, 289, 437, 537.5)
+width = 2.0
+default_color = Color(0.48, 0.72, 0.70, 0.09)
+
+[node name="GridLine3" type="Line2D" parent="Lanes" unique_id=722145751]
+points = PackedVector2Array(545, 289, 545, 537.5)
+width = 2.0
+default_color = Color(0.48, 0.72, 0.70, 0.09)
+
+[node name="GridLine4" type="Line2D" parent="Lanes" unique_id=150612423]
+points = PackedVector2Array(653, 289, 653, 537.5)
+width = 2.0
+default_color = Color(0.48, 0.72, 0.70, 0.09)
+
+[node name="GridLine5" type="Line2D" parent="Lanes" unique_id=1972649503]
+points = PackedVector2Array(761, 289, 761, 537.5)
+width = 2.0
+default_color = Color(0.48, 0.72, 0.70, 0.09)
+
+[node name="GridLine6" type="Line2D" parent="Lanes" unique_id=1055698002]
+points = PackedVector2Array(869, 289, 869, 537.5)
+width = 2.0
+default_color = Color(0.48, 0.72, 0.70, 0.09)
+
+[node name="RowLine0" type="Line2D" parent="Lanes" unique_id=1102888361]
+points = PackedVector2Array(221, 289, 869, 289)
+width = 2.0
+default_color = Color(0.48, 0.72, 0.70, 0.09)
+
+[node name="RowLine1" type="Line2D" parent="Lanes" unique_id=1111557748]
+points = PackedVector2Array(221, 335, 869, 335)
+width = 2.0
+default_color = Color(0.48, 0.72, 0.70, 0.09)
+
+[node name="RowLine2" type="Line2D" parent="Lanes" unique_id=1630293408]
+points = PackedVector2Array(221, 381.5, 869, 381.5)
+width = 2.0
+default_color = Color(0.48, 0.72, 0.70, 0.09)
+
+[node name="RowLine3" type="Line2D" parent="Lanes" unique_id=943904287]
+points = PackedVector2Array(221, 430, 869, 430)
+width = 2.0
+default_color = Color(0.48, 0.72, 0.70, 0.09)
+
+[node name="RowLine4" type="Line2D" parent="Lanes"]
+points = PackedVector2Array(221, 482.5, 869, 482.5)
+width = 2.0
+default_color = Color(0.48, 0.72, 0.70, 0.09)
+
+[node name="RowLine5" type="Line2D" parent="Lanes"]
+points = PackedVector2Array(221, 537.5, 869, 537.5)
+width = 2.0
+default_color = Color(0.48, 0.72, 0.70, 0.09)
+
+[node name="UnitContainer" type="Node2D" parent="." unique_id=1026992172]
+y_sort_enabled = true
+
+[node name="EnemyContainer" type="Node2D" parent="." unique_id=906333375]
+y_sort_enabled = true
+
+[node name="EnemySpawner" type="Node2D" parent="." unique_id=1892391375]
+script = ExtResource("2_fc0e3")
+
+[node name="SpawnTimer" type="Timer" parent="EnemySpawner" unique_id=225841838]
+wait_time = 3.5
+
+[node name="GoblinSpawnSound" type="AudioStreamPlayer" parent="EnemySpawner" unique_id=14571976]
+stream = ExtResource("8_gobsp")
+volume_db = -5.0
+
+[node name="GameOverLine" type="Area2D" parent="." unique_id=1090717248]
+position = Vector2(42, 360)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameOverLine" unique_id=1859791249]
+shape = SubResource("RectangleShape_game_over")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1649443703]
+
+[node name="UI" type="Control" parent="CanvasLayer" unique_id=2035912642]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 42.0
+offset_top = 27.0
+offset_right = 82.0
+offset_bottom = 67.0
+
+[node name="LabelMessage" type="Label" parent="CanvasLayer/UI" unique_id=658521706]
+layout_mode = 0
+offset_left = 639.0
+offset_top = 583.0
+offset_right = 976.0
+offset_bottom = 606.0
+theme_override_colors/font_color = Color(1, 0.69803923, 0, 1)
+text = "Presione la tecla \"X\" para atacar al enemigo"
+
+[node name="Title" type="Sprite2D" parent="." unique_id=931505411]
+position = Vector2(578.875, 70.49999)
+scale = Vector2(0.22802736, 0.21191406)
+texture = ExtResource("6_ryrav")
+
+[node name="Sound" type="AudioStreamPlayer" parent="." unique_id=620751460]
+stream = ExtResource("7_eow3j")
+autoplay = true
+
+[node name="GameOverLayer" type="CanvasLayer" parent="." unique_id=1839545008]
+layer = 20
+
+[node name="Overlay" type="ColorRect" parent="GameOverLayer" unique_id=1971602865]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
+[node name="CenterBox" type="VBoxContainer" parent="GameOverLayer" unique_id=1165873648]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -105.0
+offset_right = 190.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 18
+
+[node name="GameOverTitle" type="Label" parent="GameOverLayer/CenterBox" unique_id=444799737]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.86, 0.17, 0.12, 1)
+theme_override_font_sizes/font_size = 48
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="GameOverMessage" type="Label" parent="GameOverLayer/CenterBox" unique_id=1952667516]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.77, 0.65, 1)
+theme_override_font_sizes/font_size = 19
+text = "Los duendes atravesaron la vigilia."
+horizontal_alignment = 1
+
+[node name="RetryButton" type="Button" parent="GameOverLayer/CenterBox" unique_id=1438679957]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "REINTENTAR"
+
+[node name="MenuButton" type="Button" parent="GameOverLayer/CenterBox" unique_id=1120713357]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+text = "VOLVER AL MENU"
+
+[node name="GameOverAnimation" type="AnimationPlayer" parent="GameOverLayer" unique_id=1131694053]
+libraries/ = SubResource("AnimationLibrary_game_over")
+
+[connection signal="timeout" from="EnemySpawner/SpawnTimer" to="EnemySpawner" method="spawn_enemy"]
+[connection signal="body_entered" from="GameOverLine" to="." method="_on_game_over_line_body_entered"]
+[connection signal="pressed" from="GameOverLayer/CenterBox/RetryButton" to="." method="_on_retry_button_pressed"]
+[connection signal="pressed" from="GameOverLayer/CenterBox/MenuButton" to="." method="_on_menu_button_pressed"]

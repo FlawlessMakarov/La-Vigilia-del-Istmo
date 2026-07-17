@@ -1,0 +1,115 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/base_enemy.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Sprites/Imported/Enemies/duende/attack/00.png" id="2_attack_00"]
+[ext_resource type="Texture2D" path="res://Sprites/Imported/Enemies/duende/hurt/00.png" id="3_hurt_00"]
+[ext_resource type="Texture2D" path="res://Sprites/Imported/Enemies/duende/walk/00.png" id="4_walk_00"]
+
+[sub_resource type="AtlasTexture" id="Duende_attack_00"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(0, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Duende_attack_01"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(724, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Duende_attack_02"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(1448, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Duende_attack_03"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(2172, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Duende_attack_04"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(2896, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Duende_attack_05"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(3620, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Duende_hurt_00"]
+atlas = ExtResource("3_hurt_00")
+region = Rect2(0, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Duende_hurt_01"]
+atlas = ExtResource("3_hurt_00")
+region = Rect2(724, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Duende_hurt_02"]
+atlas = ExtResource("3_hurt_00")
+region = Rect2(1448, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Duende_hurt_03"]
+atlas = ExtResource("3_hurt_00")
+region = Rect2(2172, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Duende_walk_00"]
+atlas = ExtResource("4_walk_00")
+region = Rect2(0, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Duende_walk_01"]
+atlas = ExtResource("4_walk_00")
+region = Rect2(724, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Duende_walk_02"]
+atlas = ExtResource("4_walk_00")
+region = Rect2(1448, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Duende_walk_03"]
+atlas = ExtResource("4_walk_00")
+region = Rect2(2172, 0, 724, 724)
+
+[sub_resource type="SpriteFrames" id="Frames_duende"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": SubResource("Duende_attack_00")}, {"duration": 1.0, "texture": SubResource("Duende_attack_01")}, {"duration": 1.0, "texture": SubResource("Duende_attack_02")}, {"duration": 1.0, "texture": SubResource("Duende_attack_03")}, {"duration": 1.0, "texture": SubResource("Duende_attack_04")}, {"duration": 1.0, "texture": SubResource("Duende_attack_05")}],
+"loop": true,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("Duende_hurt_00")}, {"duration": 1.0, "texture": SubResource("Duende_hurt_01")}, {"duration": 1.0, "texture": SubResource("Duende_hurt_02")}, {"duration": 1.0, "texture": SubResource("Duende_hurt_03")}],
+"loop": false,
+"name": &"hurt",
+"speed": 9.0
+}, {
+"frames": [{"duration": 1.0, "texture": SubResource("Duende_walk_00")}, {"duration": 1.0, "texture": SubResource("Duende_walk_01")}, {"duration": 1.0, "texture": SubResource("Duende_walk_02")}, {"duration": 1.0, "texture": SubResource("Duende_walk_03")}],
+"loop": true,
+"name": &"walk",
+"speed": 9.0
+}]
+
+[sub_resource type="RectangleShape2D" id="Shape_duende"]
+size = Vector2(58, 62)
+
+[node name="Duende" type="CharacterBody2D"]
+script = ExtResource("1_script")
+enemy_id = "duende"
+display_name = "Duende"
+speed = 92.0
+max_health = 65.0
+contact_range = 70.0
+attack_damage = 18
+courage_reward = 8
+attack_interval = 1.05
+attack_visual_scale = 1.3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.16, 0.16)
+sprite_frames = SubResource("Frames_duende")
+animation = &"walk"
+flip_h = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("Shape_duende")
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+[node name="AbilityEffect" type="Polygon2D" parent="."]
+visible = false
+z_index = 5
+color = Color(1, 0.86, 0.22, 0.48)
+polygon = PackedVector2Array(-28, -42, 28, -42, 34, -20, 0, -4, -34, -20)
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+

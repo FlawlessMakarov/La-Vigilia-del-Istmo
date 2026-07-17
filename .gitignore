@@ -1,0 +1,9 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Archivos locales y paquetes de distribución
+*.zip
+*.log
+*.tmp
+.vscode/

@@ -1,0 +1,150 @@
+[gd_scene format=3 uid="uid://bfjog2iht12mc"]
+
+[ext_resource type="Script" uid="uid://dagvk5cmbxbrn" path="res://Scripts/base_enemy.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://d4brtq8f27uou" path="res://Sprites/Imported/Enemies/silampa/attack/00.png" id="2_attack_00"]
+[ext_resource type="Texture2D" uid="uid://nrq0a26wnaqu" path="res://Sprites/Imported/Enemies/silampa/hurt/00.png" id="3_hurt_00"]
+[ext_resource type="Texture2D" uid="uid://bvtb4s20ronb7" path="res://Sprites/Imported/Enemies/silampa/walk/00.png" id="4_walk_00"]
+
+[sub_resource type="AtlasTexture" id="Silampa_attack_00"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(0, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Silampa_attack_01"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(724, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Silampa_attack_02"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(1448, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Silampa_attack_03"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(2172, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Silampa_attack_04"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(2896, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Silampa_attack_05"]
+atlas = ExtResource("2_attack_00")
+region = Rect2(3620, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Silampa_hurt_00"]
+atlas = ExtResource("3_hurt_00")
+region = Rect2(0, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Silampa_hurt_01"]
+atlas = ExtResource("3_hurt_00")
+region = Rect2(724, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Silampa_hurt_02"]
+atlas = ExtResource("3_hurt_00")
+region = Rect2(1448, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Silampa_hurt_03"]
+atlas = ExtResource("3_hurt_00")
+region = Rect2(2172, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Silampa_walk_00"]
+atlas = ExtResource("4_walk_00")
+region = Rect2(0, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Silampa_walk_01"]
+atlas = ExtResource("4_walk_00")
+region = Rect2(724, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Silampa_walk_02"]
+atlas = ExtResource("4_walk_00")
+region = Rect2(1448, 0, 724, 724)
+
+[sub_resource type="AtlasTexture" id="Silampa_walk_03"]
+atlas = ExtResource("4_walk_00")
+region = Rect2(2172, 0, 724, 724)
+
+[sub_resource type="SpriteFrames" id="Frames_silampa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Silampa_attack_00")
+}, {
+"duration": 1.0,
+"texture": SubResource("Silampa_attack_01")
+}, {
+"duration": 1.0,
+"texture": SubResource("Silampa_attack_02")
+}, {
+"duration": 1.0,
+"texture": SubResource("Silampa_attack_03")
+}, {
+"duration": 1.0,
+"texture": SubResource("Silampa_attack_04")
+}, {
+"duration": 1.0,
+"texture": SubResource("Silampa_attack_05")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Silampa_hurt_00")
+}, {
+"duration": 1.0,
+"texture": SubResource("Silampa_hurt_01")
+}, {
+"duration": 1.0,
+"texture": SubResource("Silampa_hurt_02")
+}, {
+"duration": 1.0,
+"texture": SubResource("Silampa_hurt_03")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Silampa_walk_00")
+}, {
+"duration": 1.0,
+"texture": SubResource("Silampa_walk_01")
+}, {
+"duration": 1.0,
+"texture": SubResource("Silampa_walk_02")
+}, {
+"duration": 1.0,
+"texture": SubResource("Silampa_walk_03")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 9.0
+}]
+
+[sub_resource type="RectangleShape2D" id="Shape_silampa"]
+size = Vector2(62, 76)
+
+[node name="Silampa" type="CharacterBody2D" unique_id=780794083]
+script = ExtResource("1_script")
+enemy_id = "silampa"
+display_name = "Silampa"
+speed = 56.0
+max_health = 80.0
+contact_range = 76.0
+attack_damage = 22
+courage_reward = 12
+attack_interval = 1.35
+attack_visual_scale = 1.14
+hidden_alpha = 0.3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=492561460]
+scale = Vector2(0.17, 0.17)
+sprite_frames = SubResource("Frames_silampa")
+animation = &"attack"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=124448537]
+shape = SubResource("Shape_silampa")
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=2102886436]
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://cddsha7gkaog0"]
+
+[ext_resource type="Script" uid="uid://buw8kfdi7ohu7" path="res://Scripts/base_defender.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cqkbjirxtce47" path="res://Sprites/Imported/Frames/farolero/attack/00.png" id="2_attack_00"]
+[ext_resource type="Texture2D" uid="uid://bxesapunevxck" path="res://Sprites/Imported/Frames/farolero/attack/01.png" id="3_attack_01"]
+[ext_resource type="Texture2D" uid="uid://c2svfvttw5abs" path="res://Sprites/Imported/Frames/farolero/attack/02.png" id="4_attack_02"]
+[ext_resource type="Texture2D" uid="uid://bta1tv30de0w6" path="res://Sprites/Imported/Frames/farolero/attack/03.png" id="5_attack_03"]
+[ext_resource type="Texture2D" uid="uid://bd45koilw3tsu" path="res://Sprites/Imported/Frames/farolero/attack/04.png" id="6_attack_04"]
+[ext_resource type="Texture2D" uid="uid://cqjf4wijnvst2" path="res://Sprites/Imported/Frames/farolero/attack/05.png" id="7_attack_05"]
+[ext_resource type="Texture2D" uid="uid://ba4gl30snsrp7" path="res://Sprites/Imported/Frames/farolero/attack/06.png" id="8_attack_06"]
+[ext_resource type="Texture2D" uid="uid://cqx2cpqimsmhb" path="res://Sprites/Imported/Frames/farolero/attack/07.png" id="9_attack_07"]
+[ext_resource type="Texture2D" uid="uid://btdesikfunfbt" path="res://Sprites/Imported/Frames/farolero/hurt/00.png" id="10_hurt_00"]
+[ext_resource type="Texture2D" uid="uid://baggstmft7x7f" path="res://Sprites/Imported/Frames/farolero/hurt/01.png" id="11_hurt_01"]
+[ext_resource type="Texture2D" uid="uid://h0cndnepjfsp" path="res://Sprites/Imported/Frames/farolero/hurt/02.png" id="12_hurt_02"]
+[ext_resource type="Texture2D" uid="uid://2dmj4sjpye0d" path="res://Sprites/Imported/Frames/farolero/hurt/03.png" id="13_hurt_03"]
+[ext_resource type="Texture2D" uid="uid://dvayywwv6qagh" path="res://Sprites/Imported/Frames/farolero/idle/00.png" id="14_idle_00"]
+[ext_resource type="Texture2D" uid="uid://cfqt5xua24hxd" path="res://Sprites/Imported/Frames/farolero/idle/01.png" id="15_idle_01"]
+[ext_resource type="Texture2D" uid="uid://diall40hatpqf" path="res://Sprites/Imported/Frames/farolero/idle/02.png" id="16_idle_02"]
+[ext_resource type="Texture2D" uid="uid://sgkchon0gw1i" path="res://Sprites/Imported/Frames/farolero/idle/03.png" id="17_idle_03"]
+[ext_resource type="AudioStream" uid="uid://bcr5gqyyp0sx5" path="res://Audio/lantern_fire.mp3" id="18_light"]
+
+[sub_resource type="SpriteFrames" id="Frames_farolero"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_attack_00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_attack_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_attack_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_attack_03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_attack_04")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_attack_05")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_attack_06")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_attack_07")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_hurt_00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_hurt_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_hurt_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_hurt_03")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_idle_00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_idle_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_idle_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_idle_03")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="Shape_farolero"]
+size = Vector2(62, 74)
+
+[node name="Farolero" type="Area2D" unique_id=281615423]
+script = ExtResource("1_script")
+defender_id = "farolero"
+display_name = "Farolero"
+max_health = 75
+damage = 0
+attack_range = 0.0
+courage_interval = 4.5
+
+[node name="LightAura" type="Polygon2D" parent="." unique_id=1286798047]
+z_index = -2
+color = Color(1, 0.72, 0.18, 0.22)
+polygon = PackedVector2Array(0, -72, 51, -51, 72, 0, 51, 51, 0, 72, -51, 51, -72, 0, -51, -51)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1635905342]
+sprite_frames = SubResource("Frames_farolero")
+animation = &"attack"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=399885880]
+shape = SubResource("Shape_farolero")
+
+[node name="LightSound" type="AudioStreamPlayer" parent="." unique_id=1593874474]
+stream = ExtResource("18_light")
+volume_db = -10.0

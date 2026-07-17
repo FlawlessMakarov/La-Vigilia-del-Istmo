@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://bisvywojm6nfs"]
+
+[ext_resource type="Script" uid="uid://buw8kfdi7ohu7" path="res://Scripts/base_defender.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bab1xiqlh6mjn" path="res://Sprites/Imported/Frames/fusilero/attack/00.png" id="2_attack_00"]
+[ext_resource type="Texture2D" uid="uid://b43kxeoavymyr" path="res://Sprites/Imported/Frames/fusilero/attack/01.png" id="3_attack_01"]
+[ext_resource type="Texture2D" uid="uid://bsgwp8bynikyu" path="res://Sprites/Imported/Frames/fusilero/attack/02.png" id="4_attack_02"]
+[ext_resource type="Texture2D" uid="uid://do2qnr1a8ekw1" path="res://Sprites/Imported/Frames/fusilero/attack/03.png" id="5_attack_03"]
+[ext_resource type="Texture2D" uid="uid://e4hiiafvcc2t" path="res://Sprites/Imported/Frames/fusilero/attack/04.png" id="6_attack_04"]
+[ext_resource type="Texture2D" uid="uid://cdgpeg0oav5ec" path="res://Sprites/Imported/Frames/fusilero/attack/05.png" id="7_attack_05"]
+[ext_resource type="Texture2D" uid="uid://dhlunrlylqohl" path="res://Sprites/Imported/Frames/fusilero/attack/06.png" id="8_attack_06"]
+[ext_resource type="Texture2D" uid="uid://g2tfoj0lur7x" path="res://Sprites/Imported/Frames/fusilero/attack/07.png" id="9_attack_07"]
+[ext_resource type="Texture2D" uid="uid://mcowqyg0e435" path="res://Sprites/Imported/Frames/fusilero/hurt/00.png" id="10_hurt_00"]
+[ext_resource type="Texture2D" uid="uid://ctssvnhd6lgnp" path="res://Sprites/Imported/Frames/fusilero/hurt/01.png" id="11_hurt_01"]
+[ext_resource type="Texture2D" uid="uid://tlj53fts3auh" path="res://Sprites/Imported/Frames/fusilero/hurt/02.png" id="12_hurt_02"]
+[ext_resource type="Texture2D" uid="uid://cge7ajcctkand" path="res://Sprites/Imported/Frames/fusilero/hurt/03.png" id="13_hurt_03"]
+[ext_resource type="Texture2D" uid="uid://bvgg3wrl4wmc4" path="res://Sprites/Imported/Frames/fusilero/idle/00.png" id="14_idle_00"]
+[ext_resource type="Texture2D" uid="uid://cnd43aqeyuc7a" path="res://Sprites/Imported/Frames/fusilero/idle/01.png" id="15_idle_01"]
+[ext_resource type="Texture2D" uid="uid://dyuanue3xdrjx" path="res://Sprites/Imported/Frames/fusilero/idle/02.png" id="16_idle_02"]
+[ext_resource type="Texture2D" uid="uid://ca7j37dlbk0o8" path="res://Sprites/Imported/Frames/fusilero/idle/03.png" id="17_idle_03"]
+[ext_resource type="Texture2D" uid="uid://bxvcejnb8u3ag" path="res://Sprites/Imported/Frames/fusilero/reload/00.png" id="18_reload_00"]
+[ext_resource type="Texture2D" uid="uid://bjpp5b3ov0b2j" path="res://Sprites/Imported/Frames/fusilero/reload/01.png" id="19_reload_01"]
+[ext_resource type="Texture2D" uid="uid://cke57di8708le" path="res://Sprites/Imported/Frames/fusilero/reload/02.png" id="20_reload_02"]
+[ext_resource type="Texture2D" uid="uid://di5vu8kkiqvrc" path="res://Sprites/Imported/Frames/fusilero/reload/03.png" id="21_reload_03"]
+[ext_resource type="AudioStream" uid="uid://b8mq7cruyqh7w" path="res://Audio/shotgun_blast.mp3" id="22_shot"]
+[ext_resource type="AudioStream" uid="uid://b074usbu0ftx0" path="res://Audio/gun_reload.mp3" id="23_reload"]
+
+[sub_resource type="SpriteFrames" id="Frames_fusilero"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_attack_00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_attack_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_attack_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_attack_03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_attack_04")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_attack_05")
+}, {
+"duration": 2.0,
+"texture": ExtResource("8_attack_06")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_attack_07")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_hurt_00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_hurt_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_hurt_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_hurt_03")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_idle_00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_idle_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_idle_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_idle_03")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_reload_00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_reload_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_reload_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_reload_03")
+}],
+"loop": false,
+"name": &"reload",
+"speed": 7.0
+}]
+
+[sub_resource type="RectangleShape2D" id="Shape_fusilero"]
+size = Vector2(68, 76)
+
+[node name="Fusilero" type="Area2D" unique_id=668521827]
+script = ExtResource("1_script")
+defender_id = "fusilero"
+display_name = "Fusilero"
+max_health = 105
+damage = 32
+attack_range = 900.0
+fire_rate = 1.1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1133686520]
+sprite_frames = SubResource("Frames_fusilero")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1289665035]
+shape = SubResource("Shape_fusilero")
+
+[node name="GunshotSound" type="AudioStreamPlayer" parent="." unique_id=1399219927]
+stream = ExtResource("22_shot")
+volume_db = -7.0
+
+[node name="ReloadSound" type="AudioStreamPlayer" parent="." unique_id=446026062]
+stream = ExtResource("23_reload")
+volume_db = -11.0

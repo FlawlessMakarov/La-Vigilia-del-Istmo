@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://bcnvy621blh8p"]
+
+[ext_resource type="Script" uid="uid://buw8kfdi7ohu7" path="res://Scripts/base_defender.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://chcjnespsag8f" path="res://Sprites/Imported/Frames/escopetero/attack/00.png" id="2_attack_00"]
+[ext_resource type="Texture2D" uid="uid://crlbhalhkxk4q" path="res://Sprites/Imported/Frames/escopetero/attack/01.png" id="3_attack_01"]
+[ext_resource type="Texture2D" uid="uid://rylsfofuyt1l" path="res://Sprites/Imported/Frames/escopetero/attack/02.png" id="4_attack_02"]
+[ext_resource type="Texture2D" uid="uid://bwyiufc1bwpky" path="res://Sprites/Imported/Frames/escopetero/attack/03.png" id="5_attack_03"]
+[ext_resource type="Texture2D" uid="uid://djaqqt3618mi8" path="res://Sprites/Imported/Frames/escopetero/attack/04.png" id="6_attack_04"]
+[ext_resource type="Texture2D" uid="uid://b8pihx6hga6vj" path="res://Sprites/Imported/Frames/escopetero/attack/05.png" id="7_attack_05"]
+[ext_resource type="Texture2D" uid="uid://dchu7vly6sfd3" path="res://Sprites/Imported/Frames/escopetero/attack/06.png" id="8_attack_06"]
+[ext_resource type="Texture2D" uid="uid://b8ineamapjpyb" path="res://Sprites/Imported/Frames/escopetero/attack/07.png" id="9_attack_07"]
+[ext_resource type="Texture2D" uid="uid://cmnpq056rolqv" path="res://Sprites/Imported/Frames/escopetero/hurt/00.png" id="10_hurt_00"]
+[ext_resource type="Texture2D" uid="uid://bsgjstan2p2m5" path="res://Sprites/Imported/Frames/escopetero/hurt/01.png" id="11_hurt_01"]
+[ext_resource type="Texture2D" uid="uid://tnaogivoowm8" path="res://Sprites/Imported/Frames/escopetero/hurt/02.png" id="12_hurt_02"]
+[ext_resource type="Texture2D" uid="uid://coydxwn4necwq" path="res://Sprites/Imported/Frames/escopetero/hurt/03.png" id="13_hurt_03"]
+[ext_resource type="Texture2D" uid="uid://bvhdwghkq6syo" path="res://Sprites/Imported/Frames/escopetero/idle/00.png" id="14_idle_00"]
+[ext_resource type="Texture2D" uid="uid://c571kwesy5cy" path="res://Sprites/Imported/Frames/escopetero/idle/01.png" id="15_idle_01"]
+[ext_resource type="Texture2D" uid="uid://bpmuna1ed7u3s" path="res://Sprites/Imported/Frames/escopetero/idle/02.png" id="16_idle_02"]
+[ext_resource type="Texture2D" uid="uid://vcvbly8khl4b" path="res://Sprites/Imported/Frames/escopetero/idle/03.png" id="17_idle_03"]
+[ext_resource type="Texture2D" uid="uid://cuykylskwjh7p" path="res://Sprites/Imported/Frames/escopetero/reload/00.png" id="18_reload_00"]
+[ext_resource type="Texture2D" uid="uid://dm306x1nptcco" path="res://Sprites/Imported/Frames/escopetero/reload/01.png" id="19_reload_01"]
+[ext_resource type="Texture2D" uid="uid://bwh6606gl32c6" path="res://Sprites/Imported/Frames/escopetero/reload/02.png" id="20_reload_02"]
+[ext_resource type="Texture2D" uid="uid://swjovbd3w8b3" path="res://Sprites/Imported/Frames/escopetero/reload/03.png" id="21_reload_03"]
+[ext_resource type="Texture2D" uid="uid://b25nxsgx6on61" path="res://Sprites/Imported/Frames/escopetero/reload/04.png" id="22_reload_04"]
+[ext_resource type="Texture2D" uid="uid://drhthbrv8wlsp" path="res://Sprites/Imported/Frames/escopetero/reload/05.png" id="23_reload_05"]
+[ext_resource type="AudioStream" uid="uid://b8mq7cruyqh7w" path="res://Audio/shotgun_blast.mp3" id="24_shot"]
+[ext_resource type="AudioStream" uid="uid://b074usbu0ftx0" path="res://Audio/gun_reload.mp3" id="25_reload"]
+
+[sub_resource type="SpriteFrames" id="Frames_escopetero"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_attack_00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_attack_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_attack_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_attack_03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_attack_04")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_attack_05")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_attack_06")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_attack_07")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_hurt_00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_hurt_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_hurt_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_hurt_03")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_idle_00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_idle_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_idle_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_idle_03")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_reload_01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_reload_02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_reload_03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_reload_04")
+}],
+"loop": false,
+"name": &"reload",
+"speed": 7.0
+}]
+
+[sub_resource type="RectangleShape2D" id="Shape_escopetero"]
+size = Vector2(66, 74)
+
+[node name="Escopetero" type="Area2D" unique_id=1115043007]
+script = ExtResource("1_script")
+defender_id = "escopetero"
+display_name = "Escopetero"
+max_health = 110
+damage = 45
+attack_range = 390.0
+fire_rate = 1.4
+max_targets = 99
+lane_spread = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1152568736]
+sprite_frames = SubResource("Frames_escopetero")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1601457685]
+shape = SubResource("Shape_escopetero")
+
+[node name="GunshotSound" type="AudioStreamPlayer" parent="." unique_id=1498071087]
+stream = ExtResource("24_shot")
+volume_db = -7.0
+
+[node name="ReloadSound" type="AudioStreamPlayer" parent="." unique_id=1055961346]
+stream = ExtResource("25_reload")
+volume_db = -11.0

@@ -1,0 +1,166 @@
+[gd_scene format=3 uid="uid://crcwlknl4xbf1"]
+
+[ext_resource type="Script" path="res://menu.gd" id="1_menu"]
+[ext_resource type="Texture2D" uid="uid://8fvpy370lubx" path="res://map_pixel_dark.png" id="2_map"]
+[ext_resource type="Texture2D" uid="uid://xenkm36ysyx3" path="res://Title_.png" id="3_title"]
+[ext_resource type="AudioStream" uid="uid://c8nh2fix066ot" path="res://Audio/Sound.mp3" id="4_music"]
+[ext_resource type="Texture2D" uid="uid://dqudkim2giweh" path="res://vecteezy_fog-design-clean-alpha_9374897.png" id="5_ytr4m"]
+
+[sub_resource type="StyleBoxFlat" id="Style_menu_panel"]
+bg_color = Color(0.018, 0.025, 0.035, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.57, 0.39, 0.13, 0.9)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.7)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="Style_button"]
+bg_color = Color(0.16, 0.18, 0.18, 0.96)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.61, 0.43, 0.17, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="Style_button_hover"]
+bg_color = Color(0.31, 0.23, 0.11, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.92, 0.68, 0.28, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="MainMenu" type="Control" unique_id=168343378]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Background" type="TextureRect" parent="." unique_id=930986491]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_map")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DarkVeil" type="ColorRect" parent="." unique_id=1732864531]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0.015, 0.03, 0.42)
+
+[node name="Title" type="TextureRect" parent="." unique_id=1811378412]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 130.0
+offset_top = -23.0
+offset_right = -112.0
+offset_bottom = 371.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("3_title")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1817627691]
+layout_mode = 0
+offset_left = -319.0
+offset_top = -812.0
+offset_right = 1428.0
+offset_bottom = 935.0
+mouse_filter = 2
+texture = ExtResource("5_ytr4m")
+expand_mode = 2
+stretch_mode = 1
+
+[node name="MenuPanel" type="PanelContainer" parent="." unique_id=988775559]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -190.0
+offset_top = -338.0
+offset_right = 190.0
+offset_bottom = -66.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("Style_menu_panel")
+
+[node name="Buttons" type="VBoxContainer" parent="MenuPanel" unique_id=1117772115]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Subtitle" type="Label" parent="MenuPanel/Buttons" unique_id=1602680234]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.79, 0.74, 0.63, 1)
+theme_override_font_sizes/font_size = 20
+text = "Protege el istmo hasta el amanecer."
+horizontal_alignment = 1
+
+[node name="PlayButton" type="Button" parent="MenuPanel/Buttons" unique_id=843453388]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.87, 0.7, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("Style_button")
+theme_override_styles/hover = SubResource("Style_button_hover")
+theme_override_styles/focus = SubResource("Style_button_hover")
+text = "JUGAR"
+
+[node name="PlayButton2" type="Button" parent="MenuPanel/Buttons" unique_id=1131760493]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94, 0.87, 0.7, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("Style_button")
+theme_override_styles/hover = SubResource("Style_button_hover")
+theme_override_styles/focus = SubResource("Style_button_hover")
+text = "OPCIONES"
+
+[node name="ExitButton" type="Button" parent="MenuPanel/Buttons" unique_id=261030778]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.76, 0.71, 1)
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("Style_button")
+theme_override_styles/hover = SubResource("Style_button_hover")
+theme_override_styles/focus = SubResource("Style_button_hover")
+text = "SALIR"
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="." unique_id=456610086]
+stream = ExtResource("4_music")
+volume_db = -10.0
+autoplay = true
+
+[connection signal="pressed" from="MenuPanel/Buttons/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MenuPanel/Buttons/PlayButton2" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MenuPanel/Buttons/ExitButton" to="." method="_on_exit_button_pressed"]
