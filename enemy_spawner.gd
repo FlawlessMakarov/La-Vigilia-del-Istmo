@@ -1,5 +1,7 @@
 extends Node2D
 
+const EnemyCatalog = preload("res://Scripts/gameplay/enemy_catalog.gd")
+
 # Punto de entrada de enemigos y filas donde pueden aparecer.
 @export var spawn_x: float = 1040.0
 @export var spawn_interval: float = 3.2
@@ -13,12 +15,6 @@ extends Node2D
 @onready var spawn_timer: Timer = $SpawnTimer
 
 # Rotación de enemigos disponibles. El spawner elige una escena de esta lista.
-var enemy_scenes: Array[PackedScene] = [
-	preload("res://Scenes/Enemies/Duende.tscn"),
-	preload("res://Scenes/Enemies/Silampa.tscn"),
-	preload("res://Scenes/Enemies/PadreSinCabeza.tscn")
-]
-
 var spawning_enabled: bool = true
 var spawn_count: int = 0
 
@@ -55,10 +51,10 @@ func spawn_enemy() -> void:
 # Control simple de dificultad: primero Duendes, luego mezcla, y cada sexto spawn fuerza Padre.
 func pick_enemy_scene() -> PackedScene:
 	if spawn_count > 0 and spawn_count % 6 == 0:
-		return enemy_scenes[2]
+		return EnemyCatalog.SCENES[2]
 	if spawn_count < 3:
-		return enemy_scenes[0]
-	return enemy_scenes[randi() % enemy_scenes.size()]
+		return EnemyCatalog.SCENES[0]
+	return EnemyCatalog.SCENES[randi() % EnemyCatalog.SCENES.size()]
 
 func stop_spawning() -> void:
 	spawning_enabled = false
