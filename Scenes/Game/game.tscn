@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://imumnugy6w04"]
 
 [ext_resource type="Script" uid="uid://codycl6ly4fmv" path="res://Scripts/game/game.gd" id="1_feb5d"]
-[ext_resource type="Texture2D" path="res://Assets/Maps/battlefield.png" id="2_7jktm"]
+[ext_resource type="Texture2D" path="res://Assets/Maps/battlefield_8_columns.png" id="2_7jktm"]
 [ext_resource type="Script" uid="uid://2mwtm1l52377" path="res://Scripts/gameplay/enemy_spawner.gd" id="2_fc0e3"]
 [ext_resource type="Texture2D" uid="uid://xenkm36ysyx3" path="res://Assets/Menu/title.png" id="6_ryrav"]
 [ext_resource type="AudioStream" uid="uid://c8nh2fix066ot" path="res://Assets/Audio/Sound.mp3" id="7_eow3j"]

@@ -24,11 +24,11 @@ const DEFENDER_DATA: Dictionary = {
 }
 
 const LANE_Y: PackedFloat32Array = [312.0, 358.0, 405.0, 455.0, 510.0]
-const GRID_X_START: float = 275.0
-const GRID_COLUMN_SPACING: float = 108.0
-const GRID_CELL_CLICK_WIDTH: float = 108.0
+const GRID_X_START: float = 218.0
+const GRID_COLUMN_SPACING: float = 102.0
+const GRID_CELL_CLICK_WIDTH: float = 102.0
 const GRID_CELL_CLICK_HEIGHT: float = 58.0
-const GRID_COLUMNS: int = 6
+const GRID_COLUMNS: int = 8
 
 const CHARACTER_SCALE: float = 0.68
 const DEFENDER_GROUND_OFFSET_Y: float = -12.0
