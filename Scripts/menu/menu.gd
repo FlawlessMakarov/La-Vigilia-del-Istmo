@@ -64,10 +64,7 @@ func make_level_card(level: int) -> Button:
 	return card
 
 func start_level() -> void:
-	if loadout_panel == null:
-		build_loadout_selector()
-	loadout_panel.visible = true
-	level_panel.visible = false
+	get_tree().change_scene_to_file("res://Scenes/Game/game.tscn")
 
 func build_loadout_selector() -> void:
 	loadout_panel = PanelContainer.new()

@@ -15,8 +15,8 @@ const DEFENDER_SCENES: Dictionary = {
 const DEFENDER_ORDER: Array[String] = ["farolero", "pistolero", "granjero", "escopetero", "fusilero", "rastreador"]
 
 const DEFENDER_DATA: Dictionary = {
-	"farolero": {"name": "Farolero", "cost": 30, "cooldown": 4.0, "icon": "res://Assets/Sprites/Imported/Frames/farolero/idle/00.png"},
-	"pistolero": {"name": "Pistolero", "cost": 45, "cooldown": 3.5, "icon": "res://Assets/Sprites/Imported/Frames/pistolero/idle/00.png"},
+	"farolero": {"name": "Farolero", "cost": 30, "cooldown": 4.0, "icon": "res://Assets/Sprites/Imported/Frames/farolero/idle/00.png", "description": "Genera Coraje y revela Silampas."},
+	"pistolero": {"name": "Pistolero", "cost": 45, "cooldown": 3.5, "icon": "res://Assets/Sprites/Imported/Frames/pistolero/idle/00.png", "description": "Disparo rápido para defender un carril."},
 	"granjero": {"name": "Granjero", "cost": 55, "cooldown": 5.0, "icon": "res://Assets/Sprites/Imported/Frames/granjero/idle/00.png"},
 	"escopetero": {"name": "Escopetero", "cost": 65, "cooldown": 6.0, "icon": "res://Assets/Sprites/Imported/Frames/escopetero/idle/00.png"},
 	"fusilero": {"name": "Fusilero", "cost": 70, "cooldown": 5.5, "icon": "res://Assets/Sprites/Imported/Frames/fusilero/idle/00.png"},

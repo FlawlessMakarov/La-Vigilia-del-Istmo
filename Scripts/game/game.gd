@@ -24,6 +24,7 @@ var courage_regen_timer := 0.0
 var status_label: Label
 var countdown_active := true
 var countdown_label: Label
+var preview_enemies: Array[Node2D] = []
 
 func _ready() -> void:
 	visible = true
@@ -39,11 +40,10 @@ func _ready() -> void:
 	_setup_status_label()
 	_setup_card_ui()
 	refresh_ui()
-	card_ui.disable_all()
 	enemy_spawner.call("stop_spawning")
 	for enemy in $EnemyContainer.get_children():
 		enemy.queue_free()
-	start_countdown()
+	build_preparation_controls()
 
 func _process(delta: float) -> void:
 	if is_game_over or countdown_active:
@@ -87,6 +87,8 @@ func _setup_card_ui() -> void:
 		card_cooldowns[defender_id] = 0.0
 
 func start_countdown() -> void:
+	if not countdown_active:
+		return
 	countdown_label = Label.new()
 	countdown_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	countdown_label.position = Vector2(-180, -80)
@@ -97,6 +99,47 @@ func start_countdown() -> void:
 	countdown_label.add_theme_color_override("font_color", Color(1.0, 0.78, 0.2))
 	canvas_layer.add_child(countdown_label)
 	_run_countdown()
+
+func build_preparation_controls() -> void:
+	var start := Button.new()
+	start.text = "INICIAR RONDA"
+	start.position = Vector2(20, 610)
+	start.size = Vector2(188, 34)
+	start.add_theme_font_size_override("font_size", 15)
+	start.pressed.connect(func() -> void:
+		start.disabled = true
+		start_countdown()
+	)
+	canvas_layer.add_child(start)
+	var eye := Button.new()
+	eye.text = "👁"
+	eye.position = Vector2(1080, 22)
+	eye.size = Vector2(52, 44)
+	eye.add_theme_font_size_override("font_size", 24)
+	eye.tooltip_text = "Ver enemigos que aparecerán"
+	eye.pressed.connect(toggle_enemy_preview)
+	canvas_layer.add_child(eye)
+	show_status("Elige torres a la izquierda y pulsa INICIAR RONDA.")
+
+func toggle_enemy_preview() -> void:
+	if not preview_enemies.is_empty():
+		clear_enemy_preview()
+		return
+	$Background.position.x = 470.0
+	var scenes := [preload("res://Scenes/Enemies/Duende.tscn"), preload("res://Scenes/Enemies/Silampa.tscn"), preload("res://Scenes/Enemies/PadreSinCabeza.tscn")]
+	for index in scenes.size():
+		var enemy := (scenes[index] as PackedScene).instantiate() as Node2D
+		enemy.position = Vector2(890 + index * 80, 320 + index * 78)
+		enemy.set_process(false)
+		$EnemyContainer.add_child(enemy)
+		preview_enemies.append(enemy)
+	show_status("Vista de enemigos: Duende, Silampa y Padre sin Cabeza. Pulsa el ojo para volver.")
+
+func clear_enemy_preview() -> void:
+	for enemy in preview_enemies:
+		if is_instance_valid(enemy): enemy.queue_free()
+	preview_enemies.clear()
+	$Background.position.x = 577.0
 
 func _run_countdown() -> void:
 	for number in [3, 2, 1]:

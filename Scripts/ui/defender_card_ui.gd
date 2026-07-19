@@ -8,6 +8,7 @@ var cooldown_overlays: Dictionary = {}
 var cooldown_labels: Dictionary = {}
 var courage_label: Label
 var selected_label: Label
+var description_label: Label
 var timer_label: Label
 
 func build(parent: CanvasLayer, defender_order: Array[String], defender_data: Dictionary) -> void:
@@ -19,6 +20,7 @@ func refresh(courage: int, selected_defender_id: String, card_cooldowns: Diction
 	courage_label.text = "Coraje: %d" % courage
 	var selected_data: Dictionary = defender_data[selected_defender_id] as Dictionary
 	selected_label.text = "Seleccionado: %s" % selected_data["name"]
+	description_label.text = str(selected_data.get("description", "Listo para defender el istmo."))
 
 	for defender_id in card_buttons:
 		var button: Button = card_buttons[defender_id] as Button
@@ -46,9 +48,9 @@ func disable_all() -> void:
 
 func _create_timer(parent: CanvasLayer) -> void:
 	timer_label = Label.new()
-	timer_label.offset_left = 936.0
+	timer_label.offset_left = 20.0
 	timer_label.offset_top = 228.0
-	timer_label.offset_right = 1124.0
+	timer_label.offset_right = 208.0
 	timer_label.offset_bottom = 252.0
 	timer_label.add_theme_color_override("font_color", Color(0.95, 0.86, 0.62, 1.0))
 	timer_label.add_theme_font_size_override("font_size", 15)
@@ -59,7 +61,7 @@ func _create_info_panel(parent: CanvasLayer) -> void:
 	var info_panel := PanelContainer.new()
 	info_panel.name = "CouragePanel"
 	info_panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
-	info_panel.position = Vector2(936.0, 258.0)
+	info_panel.position = Vector2(20.0, 258.0)
 	info_panel.size = Vector2(188.0, 34.0)
 	info_panel.add_theme_stylebox_override("panel", _make_panel_style(Color(0.03, 0.035, 0.035, 0.90), Color(0.75, 0.52, 0.18, 0.95)))
 	parent.add_child(info_panel)
@@ -72,16 +74,23 @@ func _create_info_panel(parent: CanvasLayer) -> void:
 	info_panel.add_child(courage_label)
 
 	selected_label = Label.new()
-	selected_label.position = Vector2(936.0, 298.0)
+	selected_label.position = Vector2(20.0, 298.0)
 	selected_label.size = Vector2(188.0, 24.0)
 	selected_label.add_theme_color_override("font_color", Color(0.88, 0.82, 0.68, 1.0))
 	selected_label.add_theme_font_size_override("font_size", 13)
 	parent.add_child(selected_label)
+	description_label = Label.new()
+	description_label.position = Vector2(20.0, 321.0)
+	description_label.size = Vector2(188.0, 42.0)
+	description_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	description_label.add_theme_font_size_override("font_size", 11)
+	description_label.add_theme_color_override("font_color", Color(0.82, 0.78, 0.65, 1.0))
+	parent.add_child(description_label)
 
 func _create_cards(parent: CanvasLayer, defender_order: Array[String], defender_data: Dictionary) -> void:
 	var card_bar := GridContainer.new()
 	card_bar.name = "DefenderCards"
-	card_bar.position = Vector2(936.0, 314.0)
+	card_bar.position = Vector2(20.0, 368.0)
 	card_bar.size = Vector2(188.0, 292.0)
 	card_bar.columns = 2
 	card_bar.add_theme_constant_override("h_separation", 6)
