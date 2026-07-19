@@ -28,6 +28,11 @@ var countdown_label: Label
 var preview_enemies: Array[Node2D] = []
 var preview_is_visible := false
 var enemy_info_label: Label
+var eye_button: Button
+var eye_pupil: Label
+var eye_animation_time := 0.0
+var highlighted_preview_enemy: Node2D
+var preview_base_modulates: Dictionary = {}
 
 func _ready() -> void:
 	visible = true
@@ -52,6 +57,10 @@ func _ready() -> void:
 	build_preparation_controls()
 
 func _process(delta: float) -> void:
+	if countdown_active and eye_button != null and is_instance_valid(eye_button):
+		update_eye_animation(delta)
+	if preview_is_visible:
+		update_enemy_hover()
 	if is_game_over or countdown_active:
 		return
 
@@ -97,6 +106,11 @@ func _setup_card_ui() -> void:
 func start_countdown() -> void:
 	if not countdown_active:
 		return
+	if eye_button != null and is_instance_valid(eye_button):
+		eye_button.queue_free()
+		eye_button = null
+	if enemy_info_label != null:
+		enemy_info_label.visible = false
 	clear_enemy_preview()
 	countdown_label = Label.new()
 	countdown_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
@@ -120,16 +134,27 @@ func build_preparation_controls() -> void:
 		start_countdown()
 	)
 	canvas_layer.add_child(start)
-	var eye := Button.new()
-	eye.text = "👁"
-	eye.position = Vector2(1080, 22)
-	eye.size = Vector2(52, 44)
-	eye.add_theme_font_size_override("font_size", 24)
-	eye.pressed.connect(toggle_enemy_preview)
-	canvas_layer.add_child(eye)
+	eye_button = Button.new()
+	eye_button.text = "\u25EF"
+	eye_button.position = Vector2(830, 22)
+	eye_button.size = Vector2(60, 48)
+	eye_button.pivot_offset = eye_button.size * 0.5
+	eye_button.add_theme_font_size_override("font_size", 34)
+	eye_button.pressed.connect(toggle_enemy_preview)
+	canvas_layer.add_child(eye_button)
+	eye_pupil = Label.new()
+	eye_pupil.text = "\u25CF"
+	eye_pupil.position = Vector2(20, 14)
+	eye_pupil.size = Vector2(20, 20)
+	eye_pupil.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	eye_pupil.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	eye_pupil.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	eye_pupil.add_theme_font_size_override("font_size", 14)
+	eye_pupil.add_theme_color_override("font_color", Color(0.12, 0.06, 0.025, 1.0))
+	eye_button.add_child(eye_pupil)
 	enemy_info_label = Label.new()
-	enemy_info_label.position = Vector2(770, 72)
-	enemy_info_label.size = Vector2(350, 56)
+	enemy_info_label.position = Vector2(570, 76)
+	enemy_info_label.size = Vector2(310, 56)
 	enemy_info_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	enemy_info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	enemy_info_label.add_theme_font_size_override("font_size", 14)
@@ -152,6 +177,8 @@ func clear_enemy_preview() -> void:
 	for enemy in preview_enemies:
 		if is_instance_valid(enemy): enemy.queue_free()
 	preview_enemies.clear()
+	preview_base_modulates.clear()
+	highlighted_preview_enemy = null
 	preview_is_visible = false
 	var pan := create_tween()
 	pan.set_trans(Tween.TRANS_SINE)
@@ -170,6 +197,7 @@ func _create_enemy_preview() -> void:
 		if sprite != null:
 			sprite.stop()
 		preview_enemies.append(enemy)
+		preview_base_modulates[enemy.get_instance_id()] = enemy.modulate
 
 func _hide_enemy_preview() -> void:
 	preview_is_visible = false
@@ -179,17 +207,44 @@ func _hide_enemy_preview() -> void:
 	pan.tween_property(game_camera, "position:x", 576.0, 0.65)
 	if enemy_info_label != null:
 		enemy_info_label.text = ""
+	set_preview_highlight(null)
 
 func update_enemy_hover() -> void:
 	if enemy_info_label == null:
 		return
-	var names := ["Padre sin Cabeza — aturde con su campana.", "Silampa — se revela con el Farolero.", "Duende — roba Coraje cerca de la luz."]
+	var names := ["Padre sin Cabeza: aturde con su campana.", "Silampa: se revela con el Farolero.", "Duende: roba Coraje cerca de la luz."]
 	var mouse := get_global_mouse_position()
 	for index in preview_enemies.size():
 		if mouse.distance_to(preview_enemies[index].global_position) < 58.0:
 			enemy_info_label.text = names[index]
+			set_preview_highlight(preview_enemies[index])
 			return
 	enemy_info_label.text = ""
+	set_preview_highlight(null)
+
+func set_preview_highlight(enemy: Node2D) -> void:
+	if highlighted_preview_enemy == enemy:
+		return
+	if highlighted_preview_enemy != null and is_instance_valid(highlighted_preview_enemy):
+		var previous_id := highlighted_preview_enemy.get_instance_id()
+		highlighted_preview_enemy.modulate = preview_base_modulates.get(previous_id, Color.WHITE)
+	highlighted_preview_enemy = enemy
+	if enemy == null:
+		return
+	var base: Color = preview_base_modulates.get(enemy.get_instance_id(), Color.WHITE)
+	enemy.modulate = Color(1.75, 1.5, 0.72, max(base.a, 0.9))
+	var glow := Color(1.18, 1.10, 0.82, max(base.a, 0.9))
+	create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT).tween_property(enemy, "modulate", glow, 0.22)
+
+func update_eye_animation(delta: float) -> void:
+	eye_animation_time += delta
+	var pulse := 1.0 + sin(eye_animation_time * 3.2) * 0.035
+	eye_button.scale = Vector2.ONE * pulse
+	var eye_center := eye_button.position + eye_button.size * 0.5
+	var cursor_direction := get_viewport().get_mouse_position() - eye_center
+	if cursor_direction.length_squared() > 0.01:
+		cursor_direction = cursor_direction.normalized()
+	eye_pupil.position = Vector2(20, 14) + cursor_direction * 6.0
 
 func _run_countdown() -> void:
 	for number in [3, 2, 1]:
