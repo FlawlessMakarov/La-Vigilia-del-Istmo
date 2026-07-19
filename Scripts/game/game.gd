@@ -12,6 +12,7 @@ const DefenderCardUI = preload("res://Scripts/ui/defender_card_ui.gd")
 @onready var game_over_animation: AnimationPlayer = $GameOverLayer/GameOverAnimation
 @onready var background_music: AudioStreamPlayer = $Sound
 @onready var canvas_layer: CanvasLayer = $CanvasLayer
+@onready var game_camera: Camera2D = $Camera2D
 
 var board: GridBoard
 var card_ui: DefenderCardUI
@@ -26,6 +27,7 @@ var countdown_active := true
 var countdown_label: Label
 var preview_enemies: Array[Node2D] = []
 var preview_is_visible := false
+var enemy_info_label: Label
 
 func _ready() -> void:
 	visible = true
@@ -63,6 +65,8 @@ func _process(delta: float) -> void:
 		start_victory()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion and preview_is_visible:
+		update_enemy_hover()
 	if is_game_over or countdown_active:
 		return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -122,6 +126,14 @@ func build_preparation_controls() -> void:
 	eye.tooltip_text = "Ver enemigos que aparecerán"
 	eye.pressed.connect(toggle_enemy_preview)
 	canvas_layer.add_child(eye)
+	enemy_info_label = Label.new()
+	enemy_info_label.position = Vector2(770, 72)
+	enemy_info_label.size = Vector2(350, 56)
+	enemy_info_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	enemy_info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	enemy_info_label.add_theme_font_size_override("font_size", 14)
+	enemy_info_label.add_theme_color_override("font_color", Color(1.0, 0.84, 0.42, 1.0))
+	canvas_layer.add_child(enemy_info_label)
 	show_status("Elige torres a la izquierda y pulsa INICIAR RONDA.")
 
 func toggle_enemy_preview() -> void:
@@ -132,10 +144,7 @@ func toggle_enemy_preview() -> void:
 	var pan := create_tween()
 	pan.set_trans(Tween.TRANS_SINE)
 	pan.set_ease(Tween.EASE_IN_OUT)
-	pan.tween_property($Background, "position:x", 520.0, 0.65)
-	for index in preview_enemies.size():
-		var enemy := preview_enemies[index]
-		create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT).tween_property(enemy, "position", Vector2(875 + index * 78, 320 + index * 78), 0.65)
+	pan.tween_property(game_camera, "position:x", 720.0, 0.65)
 	show_status("Vista de enemigos: Duende, Silampa y Padre sin Cabeza. Pulsa el ojo para volver.")
 
 func clear_enemy_preview() -> void:
@@ -146,13 +155,13 @@ func clear_enemy_preview() -> void:
 	var pan := create_tween()
 	pan.set_trans(Tween.TRANS_SINE)
 	pan.set_ease(Tween.EASE_IN_OUT)
-	pan.tween_property($Background, "position:x", 577.0, 0.65)
+	pan.tween_property(game_camera, "position:x", 576.0, 0.65)
 
 func _create_enemy_preview() -> void:
 	var scenes := [preload("res://Scenes/Enemies/Duende.tscn"), preload("res://Scenes/Enemies/Silampa.tscn"), preload("res://Scenes/Enemies/PadreSinCabeza.tscn")]
 	for index in scenes.size():
 		var enemy := (scenes[index] as PackedScene).instantiate() as Node2D
-		enemy.position = Vector2(1190 + index * 80, 320 + index * 78)
+		enemy.position = Vector2(1170 + index * 58, 320 + index * 78)
 		$EnemyContainer.add_child(enemy)
 		enemy.set_process(false)
 		enemy.remove_from_group("enemies")
@@ -163,13 +172,23 @@ func _create_enemy_preview() -> void:
 
 func _hide_enemy_preview() -> void:
 	preview_is_visible = false
-	for index in preview_enemies.size():
-		var enemy := preview_enemies[index]
-		create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT).tween_property(enemy, "position", Vector2(1190 + index * 80, 320 + index * 78), 0.65)
 	var pan := create_tween()
 	pan.set_trans(Tween.TRANS_SINE)
 	pan.set_ease(Tween.EASE_IN_OUT)
-	pan.tween_property($Background, "position:x", 577.0, 0.65)
+	pan.tween_property(game_camera, "position:x", 576.0, 0.65)
+	if enemy_info_label != null:
+		enemy_info_label.text = ""
+
+func update_enemy_hover() -> void:
+	if enemy_info_label == null:
+		return
+	var names := ["Duende — roba Coraje cerca de la luz.", "Silampa — se revela con el Farolero.", "Padre sin Cabeza — aturde con su campana."]
+	var mouse := get_global_mouse_position()
+	for index in preview_enemies.size():
+		if mouse.distance_to(preview_enemies[index].global_position) < 58.0:
+			enemy_info_label.text = names[index]
+			return
+	enemy_info_label.text = ""
 
 func _run_countdown() -> void:
 	for number in [3, 2, 1]:

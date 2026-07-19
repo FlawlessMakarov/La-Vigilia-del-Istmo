@@ -81,6 +81,16 @@ position = Vector2(577, 295.5)
 scale = Vector2(0.85, 0.7)
 texture = ExtResource("2_7jktm")
 
+[node name="GrassExtension" type="Sprite2D" parent="."]
+position = Vector2(1330, 430)
+scale = Vector2(0.85, 0.7)
+texture = ExtResource("2_7jktm")
+region_enabled = true
+region_rect = Rect2(1190, 320, 280, 680)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+
 [node name="Lanes" type="Node2D" parent="." unique_id=284881793]
 visible = false
 
