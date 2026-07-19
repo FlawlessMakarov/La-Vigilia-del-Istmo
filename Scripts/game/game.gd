@@ -125,13 +125,19 @@ func toggle_enemy_preview() -> void:
 	if not preview_enemies.is_empty():
 		clear_enemy_preview()
 		return
-	$Background.position.x = 470.0
+	var pan := create_tween()
+	pan.set_trans(Tween.TRANS_SINE)
+	pan.set_ease(Tween.EASE_IN_OUT)
+	pan.tween_property($Background, "position:x", 520.0, 0.65)
 	var scenes := [preload("res://Scenes/Enemies/Duende.tscn"), preload("res://Scenes/Enemies/Silampa.tscn"), preload("res://Scenes/Enemies/PadreSinCabeza.tscn")]
 	for index in scenes.size():
 		var enemy := (scenes[index] as PackedScene).instantiate() as Node2D
-		enemy.position = Vector2(890 + index * 80, 320 + index * 78)
-		enemy.set_process(false)
+		enemy.position = Vector2(875 + index * 78, 320 + index * 78)
 		$EnemyContainer.add_child(enemy)
+		enemy.set_process(false)
+		var sprite := enemy.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
+		if sprite != null:
+			sprite.stop()
 		preview_enemies.append(enemy)
 	show_status("Vista de enemigos: Duende, Silampa y Padre sin Cabeza. Pulsa el ojo para volver.")
 
@@ -139,7 +145,10 @@ func clear_enemy_preview() -> void:
 	for enemy in preview_enemies:
 		if is_instance_valid(enemy): enemy.queue_free()
 	preview_enemies.clear()
-	$Background.position.x = 577.0
+	var pan := create_tween()
+	pan.set_trans(Tween.TRANS_SINE)
+	pan.set_ease(Tween.EASE_IN_OUT)
+	pan.tween_property($Background, "position:x", 577.0, 0.65)
 
 func _run_countdown() -> void:
 	for number in [3, 2, 1]:
