@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://imumnugy6w04"]
 
 [ext_resource type="Script" uid="uid://codycl6ly4fmv" path="res://Scripts/game/game.gd" id="1_feb5d"]
-[ext_resource type="Texture2D" path="res://Assets/Maps/battlefield_8_columns.png" id="2_7jktm"]
-[ext_resource type="Texture2D" path="res://Assets/Maps/grass_right_extension.png" id="3_grass_extension"]
+[ext_resource type="Texture2D" path="res://Assets/Maps/battlefield_seamless_wide.png" id="2_7jktm"]
 [ext_resource type="Script" uid="uid://2mwtm1l52377" path="res://Scripts/gameplay/enemy_spawner.gd" id="2_fc0e3"]
 [ext_resource type="Texture2D" uid="uid://xenkm36ysyx3" path="res://Assets/Menu/title.png" id="6_ryrav"]
 [ext_resource type="AudioStream" uid="uid://c8nh2fix066ot" path="res://Assets/Audio/Sound.mp3" id="7_eow3j"]
@@ -78,14 +77,9 @@ visible = false
 script = ExtResource("1_feb5d")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=686448474]
-position = Vector2(577, 295.5)
-scale = Vector2(0.88, 0.7)
+position = Vector2(779, 325)
+scale = Vector2(1, 0.69)
 texture = ExtResource("2_7jktm")
-
-[node name="GrassRightExtension" type="Sprite2D" parent="."]
-position = Vector2(1609, 295.5)
-scale = Vector2(0.57, 0.57)
-texture = ExtResource("3_grass_extension")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576, 324)
