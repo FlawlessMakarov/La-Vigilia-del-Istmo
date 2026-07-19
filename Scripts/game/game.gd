@@ -144,7 +144,7 @@ func toggle_enemy_preview() -> void:
 	var pan := create_tween()
 	pan.set_trans(Tween.TRANS_SINE)
 	pan.set_ease(Tween.EASE_IN_OUT)
-	pan.tween_property(game_camera, "position:x", 720.0, 0.65)
+	pan.tween_property(game_camera, "position:x", 700.0, 0.65)
 	show_status("Vista de enemigos: Duende, Silampa y Padre sin Cabeza. Pulsa el ojo para volver.")
 
 func clear_enemy_preview() -> void:
@@ -158,10 +158,10 @@ func clear_enemy_preview() -> void:
 	pan.tween_property(game_camera, "position:x", 576.0, 0.65)
 
 func _create_enemy_preview() -> void:
-	var scenes := [preload("res://Scenes/Enemies/Duende.tscn"), preload("res://Scenes/Enemies/Silampa.tscn"), preload("res://Scenes/Enemies/PadreSinCabeza.tscn")]
+	var scenes := [preload("res://Scenes/Enemies/PadreSinCabeza.tscn"), preload("res://Scenes/Enemies/Silampa.tscn"), preload("res://Scenes/Enemies/Duende.tscn")]
 	for index in scenes.size():
 		var enemy := (scenes[index] as PackedScene).instantiate() as Node2D
-		enemy.position = Vector2(1170 + index * 58, 320 + index * 78)
+		enemy.position = Vector2(1160 + index * 52, 330 + index * 70)
 		$EnemyContainer.add_child(enemy)
 		enemy.set_process(false)
 		enemy.remove_from_group("enemies")
@@ -182,7 +182,7 @@ func _hide_enemy_preview() -> void:
 func update_enemy_hover() -> void:
 	if enemy_info_label == null:
 		return
-	var names := ["Duende — roba Coraje cerca de la luz.", "Silampa — se revela con el Farolero.", "Padre sin Cabeza — aturde con su campana."]
+	var names := ["Padre sin Cabeza — aturde con su campana.", "Silampa — se revela con el Farolero.", "Duende — roba Coraje cerca de la luz."]
 	var mouse := get_global_mouse_position()
 	for index in preview_enemies.size():
 		if mouse.distance_to(preview_enemies[index].global_position) < 58.0:
