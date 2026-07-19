@@ -61,3 +61,8 @@ func stop_spawning() -> void:
 	spawn_timer.stop()
 	if spawn_sound != null:
 		spawn_sound.stop()
+
+func start_spawning() -> void:
+	spawning_enabled = true
+	spawn_enemy()
+	spawn_timer.start()

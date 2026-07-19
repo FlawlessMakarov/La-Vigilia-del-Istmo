@@ -22,6 +22,8 @@ var card_cooldowns: Dictionary = {}
 var survival_time := GameConfig.SURVIVAL_DURATION
 var courage_regen_timer := 0.0
 var status_label: Label
+var countdown_active := true
+var countdown_label: Label
 
 func _ready() -> void:
 	visible = true
@@ -37,9 +39,14 @@ func _ready() -> void:
 	_setup_status_label()
 	_setup_card_ui()
 	refresh_ui()
+	card_ui.disable_all()
+	enemy_spawner.call("stop_spawning")
+	for enemy in $EnemyContainer.get_children():
+		enemy.queue_free()
+	start_countdown()
 
 func _process(delta: float) -> void:
-	if is_game_over:
+	if is_game_over or countdown_active:
 		return
 
 	survival_time -= delta
@@ -54,7 +61,7 @@ func _process(delta: float) -> void:
 		start_victory()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if is_game_over:
+	if is_game_over or countdown_active:
 		return
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var cell := board.world_to_cell(get_global_mouse_position())
@@ -78,6 +85,31 @@ func _setup_card_ui() -> void:
 	card_ui.build(canvas_layer, GameConfig.DEFENDER_ORDER, GameConfig.DEFENDER_DATA)
 	for defender_id in GameConfig.DEFENDER_ORDER:
 		card_cooldowns[defender_id] = 0.0
+
+func start_countdown() -> void:
+	countdown_label = Label.new()
+	countdown_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	countdown_label.position = Vector2(-180, -80)
+	countdown_label.size = Vector2(360, 160)
+	countdown_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	countdown_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	countdown_label.add_theme_font_size_override("font_size", 82)
+	countdown_label.add_theme_color_override("font_color", Color(1.0, 0.78, 0.2))
+	canvas_layer.add_child(countdown_label)
+	_run_countdown()
+
+func _run_countdown() -> void:
+	for number in [3, 2, 1]:
+		countdown_label.text = str(number)
+		await get_tree().create_timer(1.0).timeout
+	countdown_label.text = "¡DEFIENDE!"
+	countdown_label.add_theme_font_size_override("font_size", 52)
+	await get_tree().create_timer(0.85).timeout
+	countdown_label.queue_free()
+	countdown_active = false
+	enemy_spawner.call("start_spawning")
+	refresh_ui()
+	show_status("¡La ronda comenzó! Defiende el istmo.")
 
 func _on_defender_card_selected(defender_id: String) -> void:
 	selected_defender_id = defender_id
