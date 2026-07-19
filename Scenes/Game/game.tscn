@@ -200,6 +200,17 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameOverLine" unique_id=1859791249]
 shape = SubResource("RectangleShape_game_over")
 
+[node name="GrassFallbackLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="GrassFallback" type="ColorRect" parent="GrassFallbackLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.035, 0.11, 0.075, 1)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1649443703]
 
 [node name="UI" type="Control" parent="CanvasLayer" unique_id=2035912642]

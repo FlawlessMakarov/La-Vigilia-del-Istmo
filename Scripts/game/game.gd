@@ -41,6 +41,8 @@ func _ready() -> void:
 		GameConfig.GRID_CELL_CLICK_HEIGHT
 	)
 	_setup_status_label()
+	if status_label != null:
+		status_label.visible = false
 	_setup_card_ui()
 	refresh_ui()
 	enemy_spawner.call("stop_spawning")
@@ -123,7 +125,6 @@ func build_preparation_controls() -> void:
 	eye.position = Vector2(1080, 22)
 	eye.size = Vector2(52, 44)
 	eye.add_theme_font_size_override("font_size", 24)
-	eye.tooltip_text = "Ver enemigos que aparecerán"
 	eye.pressed.connect(toggle_enemy_preview)
 	canvas_layer.add_child(eye)
 	enemy_info_label = Label.new()
