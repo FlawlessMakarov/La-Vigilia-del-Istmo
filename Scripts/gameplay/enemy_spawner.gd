@@ -3,13 +3,12 @@ extends Node2D
 const EnemyCatalog = preload("res://Scripts/gameplay/enemy_catalog.gd")
 
 # Punto de entrada de enemigos y filas donde pueden aparecer.
-@export var spawn_x: float = 1040.0
+@export var spawn_x: float = 977.0
 @export var spawn_interval: float = 3.2
-@export var lane_y: PackedFloat32Array = [225.0, 284.0, 343.0, 402.0, 461.0]
+@export var lane_y: PackedFloat32Array = [310.0, 348.0, 386.0, 429.0, 472.0]
 @export_range(0.5, 1.0, 0.01) var character_scale: float = 0.68
 @export_range(0.5, 1.2, 0.01) var silampa_scale: float = 0.92
 @export_range(0.5, 1.2, 0.01) var padre_scale: float = 0.98
-@export_range(-24.0, 0.0, 1.0) var ground_offset_y: float = -8.0
 
 @onready var spawn_sound: AudioStreamPlayer = $GoblinSpawnSound
 @onready var spawn_timer: Timer = $SpawnTimer
@@ -39,7 +38,7 @@ func spawn_enemy() -> void:
 	elif enemy_id == "padre":
 		enemy_scale = padre_scale
 
-	enemy.position = Vector2(spawn_x, lane_y[lane_index] + ground_offset_y)
+	enemy.position = Vector2(spawn_x, lane_y[lane_index] + get_enemy_ground_offset(enemy_id))
 	enemy.scale = Vector2.ONE * enemy_scale
 	enemy.set("lane_index", lane_index)
 
@@ -47,6 +46,15 @@ func spawn_enemy() -> void:
 	spawn_count += 1
 	if spawn_sound != null and not spawn_sound.playing:
 		spawn_sound.play()
+
+func get_enemy_ground_offset(enemy_id: String) -> float:
+	match enemy_id:
+		"padre":
+			return -40.0
+		"silampa":
+			return -28.0
+		_:
+			return -21.0
 
 # Control simple de dificultad: primero Duendes, luego mezcla, y cada sexto spawn fuerza Padre.
 func pick_enemy_scene() -> PackedScene:
