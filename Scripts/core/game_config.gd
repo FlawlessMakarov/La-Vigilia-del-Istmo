@@ -23,11 +23,11 @@ const DEFENDER_DATA: Dictionary = {
 	"rastreador": {"name": "Rastreador", "cost": 85, "cooldown": 7.0, "icon": "res://Assets/Sprites/Imported/Frames/rastreador/idle/00.png"}
 }
 
-const LANE_Y: PackedFloat32Array = [312.0, 358.0, 405.0, 455.0, 510.0]
-const GRID_X_START: float = 218.0
-const GRID_COLUMN_SPACING: float = 102.0
-const GRID_CELL_CLICK_WIDTH: float = 102.0
-const GRID_CELL_CLICK_HEIGHT: float = 58.0
+const LANE_Y: PackedFloat32Array = [225.0, 284.0, 343.0, 402.0, 461.0]
+const GRID_X_START: float = 240.0
+const GRID_COLUMN_SPACING: float = 154.0
+const GRID_CELL_CLICK_WIDTH: float = 150.0
+const GRID_CELL_CLICK_HEIGHT: float = 56.0
 const GRID_COLUMNS: int = 8
 
 const CHARACTER_SCALE: float = 0.68

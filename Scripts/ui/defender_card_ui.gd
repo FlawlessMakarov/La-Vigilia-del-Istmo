@@ -20,7 +20,7 @@ func build(parent: CanvasLayer, defender_order: Array[String], defender_data: Di
 	_create_tower_toggle(parent)
 
 func refresh(courage: int, selected_defender_id: String, card_cooldowns: Dictionary, defender_data: Dictionary) -> void:
-	courage_label.text = "Coraje: %d" % courage
+	courage_label.text = "CORAJE  %d" % courage
 	var selected_data: Dictionary = defender_data[selected_defender_id] as Dictionary
 	selected_label.text = "Seleccionado: %s" % selected_data["name"]
 	description_label.text = str(selected_data.get("description", "Listo para defender el istmo."))
@@ -64,39 +64,41 @@ func _create_info_panel(parent: CanvasLayer) -> void:
 	var info_panel := PanelContainer.new()
 	info_panel.name = "CouragePanel"
 	info_panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
-	info_panel.position = Vector2(912.0, 70.0)
-	info_panel.size = Vector2(200.0, 34.0)
+	info_panel.position = Vector2(22.0, 20.0)
+	info_panel.size = Vector2(112.0, 28.0)
 	info_panel.add_theme_stylebox_override("panel", _make_panel_style(Color(0.03, 0.035, 0.035, 0.90), Color(0.75, 0.52, 0.18, 0.95)))
 	parent.add_child(info_panel)
 
 	courage_label = Label.new()
 	courage_label.add_theme_color_override("font_color", Color(1.0, 0.82, 0.32, 1.0))
-	courage_label.add_theme_font_size_override("font_size", 18)
+	courage_label.add_theme_font_size_override("font_size", 13)
 	courage_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	courage_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	info_panel.add_child(courage_label)
 
 	selected_label = Label.new()
-	selected_label.position = Vector2(912.0, 110.0)
+	selected_label.position = Vector2(22.0, 110.0)
 	selected_label.size = Vector2(200.0, 24.0)
 	selected_label.add_theme_color_override("font_color", Color(0.88, 0.82, 0.68, 1.0))
 	selected_label.add_theme_font_size_override("font_size", 13)
 	parent.add_child(selected_label)
+	selected_label.visible = false
 	description_label = Label.new()
-	description_label.position = Vector2(912.0, 135.0)
+	description_label.position = Vector2(22.0, 135.0)
 	description_label.size = Vector2(200.0, 48.0)
 	description_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	description_label.add_theme_font_size_override("font_size", 11)
 	description_label.add_theme_color_override("font_color", Color(0.82, 0.78, 0.65, 1.0))
 	parent.add_child(description_label)
+	description_label.visible = false
 
 func _create_cards(parent: CanvasLayer, defender_order: Array[String], defender_data: Dictionary) -> void:
 	card_bar = GridContainer.new()
 	card_bar.name = "DefenderCards"
-	card_bar.position = Vector2(912.0, 232.0)
-	card_bar.size = Vector2(200.0, 376.0)
+	card_bar.position = Vector2(22.0, 96.0)
+	card_bar.size = Vector2(76.0, 336.0)
 	card_bar.columns = 1
-	card_bar.add_theme_constant_override("v_separation", 6)
+	card_bar.add_theme_constant_override("v_separation", 3)
 	card_bar.visible = false
 	parent.add_child(card_bar)
 
@@ -104,13 +106,11 @@ func _create_cards(parent: CanvasLayer, defender_order: Array[String], defender_
 		var data: Dictionary = defender_data[defender_id] as Dictionary
 		var button := Button.new()
 		button.name = "%sCard" % defender_id.capitalize()
-		button.custom_minimum_size = Vector2(200, 58)
+		button.custom_minimum_size = Vector2(76, 52)
 		button.focus_mode = Control.FOCUS_ALL
 		button.mouse_filter = Control.MOUSE_FILTER_STOP
 		button.toggle_mode = true
-		button.text = "%s   %d" % [data["name"], data["cost"]]
-		button.alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		button.add_theme_font_size_override("font_size", 13)
+		button.text = ""
 		button.add_theme_color_override("font_color", Color(0.96, 0.88, 0.68, 1.0))
 		button.add_theme_color_override("font_disabled_color", Color(0.54, 0.54, 0.54, 1.0))
 		button.add_theme_stylebox_override("normal", _make_card_style(false))
@@ -129,20 +129,31 @@ func _create_cards(parent: CanvasLayer, defender_order: Array[String], defender_
 		icon_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-		icon_rect.position = Vector2(5.0, 3.0)
-		icon_rect.size = Vector2(62.0, 52.0)
+		icon_rect.position = Vector2(4.0, 2.0)
+		icon_rect.size = Vector2(48.0, 47.0)
 		button.add_child(icon_rect)
+
+		var price_label := Label.new()
+		price_label.text = "%d C" % int(data["cost"])
+		price_label.position = Vector2(45.0, 28.0)
+		price_label.size = Vector2(29.0, 20.0)
+		price_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		price_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		price_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		price_label.add_theme_font_size_override("font_size", 10)
+		price_label.add_theme_color_override("font_color", Color(1.0, 0.83, 0.32, 1.0))
+		button.add_child(price_label)
 
 		var overlay := ColorRect.new()
 		overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		overlay.color = Color(0.02, 0.025, 0.025, 0.72)
-		overlay.size = Vector2(200.0, 0.0)
+		overlay.size = Vector2(76.0, 0.0)
 		overlay.visible = false
 		button.add_child(overlay)
 
 		var cooldown_label := Label.new()
 		cooldown_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		cooldown_label.size = Vector2(200.0, 58.0)
+		cooldown_label.size = Vector2(76.0, 52.0)
 		cooldown_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		cooldown_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		cooldown_label.add_theme_font_size_override("font_size", 22)
@@ -162,21 +173,21 @@ func _update_cooldown_visual(defender_id: String, cooldown_left: float, cooldown
 	overlay.visible = cooling_down
 	label.visible = cooling_down
 	if cooling_down:
-		overlay.size.y = 58.0 * clamp(cooldown_left / cooldown_duration, 0.0, 1.0)
+		overlay.size.y = 52.0 * clamp(cooldown_left / cooldown_duration, 0.0, 1.0)
 		label.text = "%d" % int(ceil(cooldown_left))
 
 func _create_tower_toggle(parent: CanvasLayer) -> void:
 	tower_toggle = Button.new()
-	tower_toggle.text = "TORRES  v"
-	tower_toggle.position = Vector2(912.0, 188.0)
-	tower_toggle.size = Vector2(200.0, 38.0)
-	tower_toggle.add_theme_font_size_override("font_size", 15)
+	tower_toggle.text = "TORRES v"
+	tower_toggle.position = Vector2(22.0, 54.0)
+	tower_toggle.size = Vector2(76.0, 34.0)
+	tower_toggle.add_theme_font_size_override("font_size", 11)
 	tower_toggle.pressed.connect(_toggle_tower_column)
 	parent.add_child(tower_toggle)
 
 func _toggle_tower_column() -> void:
 	card_bar.visible = not card_bar.visible
-	tower_toggle.text = "TORRES  ^" if card_bar.visible else "TORRES  v"
+	tower_toggle.text = "TORRES ^" if card_bar.visible else "TORRES v"
 
 func _emit_selection(defender_id: String) -> void:
 	defender_selected.emit(defender_id)
@@ -195,10 +206,10 @@ func _make_card_style(active: bool) -> StyleBoxFlat:
 	style.border_color = Color(0.52, 0.34, 0.14, 1.0) if not active else Color(1.0, 0.78, 0.28, 1.0)
 	style.set_border_width_all(2)
 	style.set_corner_radius_all(4)
-	style.content_margin_top = 8
-	style.content_margin_left = 72
-	style.content_margin_right = 8
-	style.content_margin_bottom = 8
+	style.content_margin_top = 2
+	style.content_margin_left = 2
+	style.content_margin_right = 2
+	style.content_margin_bottom = 2
 	return style
 
 func _make_disabled_card_style() -> StyleBoxFlat:

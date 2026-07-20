@@ -5,7 +5,7 @@ const EnemyCatalog = preload("res://Scripts/gameplay/enemy_catalog.gd")
 # Punto de entrada de enemigos y filas donde pueden aparecer.
 @export var spawn_x: float = 1040.0
 @export var spawn_interval: float = 3.2
-@export var lane_y: PackedFloat32Array = [312.0, 358.0, 405.0, 455.0, 510.0]
+@export var lane_y: PackedFloat32Array = [225.0, 284.0, 343.0, 402.0, 461.0]
 @export_range(0.5, 1.0, 0.01) var character_scale: float = 0.68
 @export_range(0.5, 1.2, 0.01) var silampa_scale: float = 0.92
 @export_range(0.5, 1.2, 0.01) var padre_scale: float = 0.98
